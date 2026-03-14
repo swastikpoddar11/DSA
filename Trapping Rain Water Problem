@@ -1,0 +1,31 @@
+class Solution {
+    public int trap(int[] height) {
+        int low=0;
+        int high = height.length-1;
+        int low_max = 0;
+        int high_max = 0;
+        int count = 0;
+        while(low<high){
+            if (height[low]<height[high]){
+                if(height[low]>=low_max){
+                    low_max = height[low];
+                }
+                else {
+                    count = count + low_max - height[low]; 
+                }
+                low++;
+            }
+            else {
+                if(height[high]>=high_max){
+                    high_max = height[high];
+                }
+                else{
+                    count = count + high_max -height[high];
+                }
+                high --;
+            }
+
+        }
+        return count;
+    }
+}
