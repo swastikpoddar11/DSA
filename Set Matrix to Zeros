@@ -1,0 +1,27 @@
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        // took n and m as the legth of i and j matrix
+        int n = matrix.length;
+        int m = matrix[0].length;
+        // Created two array of n and m length for top and side
+        int[] top = new int[n];
+        int[] side = new int[m];
+
+        for (int i = 0;i<n;i++){
+            for (int j =0; j<m;j++){
+            if (matrix[i][j]==0){
+                top[i]=1;
+                side[j]=1;
+            }
+        }
+     }
+
+        for (int i = 0; i<n;i++){
+            for (int j = 0 ; j<m; j++){
+                if (top[i]==1 || side[j]==1){
+                    matrix[i][j]=0;
+                }
+            }
+        }
+    }
+}
