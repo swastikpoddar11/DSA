@@ -1,0 +1,9 @@
+class Solution {
+    public String reverseWords(String s) {
+        String[] result = s.trim().split("\\s+");
+        List<String> list = Arrays.asList(result);
+        Collections.reverse(list);
+        String finals = String.join(" ", list);
+        return finals;
+    }
+}
