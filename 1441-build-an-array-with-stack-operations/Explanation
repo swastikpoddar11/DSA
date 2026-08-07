@@ -1,0 +1,113 @@
+# Build an Array With Stack Operations (LeetCode 1441)
+
+## The Factory Conveyor Belt Analogy
+
+The easiest way to understand this algorithm is to imagine you are working at a factory conveyor belt.
+
+* **The Stream (`current`)**: The conveyor belt brings you boxes numbered strictly in order: `1, 2, 3, 4, 5...`
+* **The Target (`target`)**: This is your shopping list. For example, your boss gave you a list that says: *"I only want boxes `[1, 3]`."*
+* **The Rules**:
+1. You *must* pick up every box from the conveyor belt one by one. You cannot skip picking them up.
+2. When you pick a box up, you write **`Push`** in your notebook.
+3. If you realize you don't need it, you immediately throw it in the trash and write **`Pop`**.
+
+
+
+---
+
+## Step-by-Step Code Breakdown
+
+### 1. Setting up our workspace
+
+```java
+List<String> result = new ArrayList<>();
+int current = 1; 
+
+```
+
+* `result` is just a blank notebook where we will write down everything we do (`"Push"` or `"Pop"`).
+* `current = 1` means the first box coming down the conveyor belt has a `1` written on it.
+
+### 2. Looking at our shopping list
+
+```java
+for (int num : target) {
+
+```
+
+* We look at our shopping list (`target`) one number at a time. The number we are currently looking for is stored in the variable `num`.
+
+### 3. Throwing away boxes we don't want
+
+```java
+while (current < num) {
+    result.add("Push");
+    result.add("Pop");
+    current++;
+}
+
+```
+
+* Let's say our list wants box **`3`** (so `num` is `3`).
+* But the conveyor belt is handing us box **`2`** (so `current` is `2`).
+* Because `2 < 3`, we know we don't want this box!
+* So, we pick it up (`"Push"`), throw it in the trash (`"Pop"`), and wait for the next box on the belt (`current++`).
+
+### 4. Keeping the box we want
+
+```java
+    result.add("Push");
+    current++;
+}
+
+```
+
+* Once the conveyor belt box matches what we want on our list, the `while` loop above stops.
+* We pick up the box and keep it! So we just write down `"Push"`. We do *not* Pop it.
+* Then we get ready for the next box (`current++`).
+
+---
+
+## Quick Example Walkthrough
+
+Let's trace the execution if `target = [1, 3]`:
+
+| Step | Action | Explanation | Notebook Status (`result`) |
+| --- | --- | --- | --- |
+| **1. Look for `1**` | Belt gives us `1`. | It's a match! We keep it. | `["Push"]` |
+|  | *Belt moves to `2`.* |  |  |
+| **2. Look for `3**` | Belt gives us `2`. | We don't want it. We pick it up and throw it away. | `["Push", "Push", "Pop"]` |
+|  | *Belt moves to `3`.* |  |  |
+| **3. Look for `3**` | Belt gives us `3`. | It's a match! We keep it. | `["Push", "Push", "Pop", "Push"]` |
+
+**Finish:** We finished our shopping list! We return our notebook: `["Push", "Push", "Pop", "Push"]`.
+
+---
+
+## Full Solution Code
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+class Solution {
+    public List<String> buildArray(int[] target, int n) {
+        List<String> result = new ArrayList<>();
+        int current = 1; 
+        
+        for (int num : target) {
+            while (current < num) {
+                result.add("Push");
+                result.add("Pop");
+                current++;
+            }
+            
+            result.add("Push");
+            current++;
+        }
+        
+        return result;
+    }
+}
+
+```
